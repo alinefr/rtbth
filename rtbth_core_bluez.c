@@ -80,8 +80,8 @@ int rtbt_hci_dev_flush(struct hci_dev *hdev)
 	return 0;
 }
 
-static const char *pkt_type_str[]=
-	{"UNKNOWN", "HCI_CMD", "ACL_DATA", "SCO_DATA", "HCI_EVENT", "HCI_VENDOR", "ERROR_TYPE"};
+// static const char *pkt_type_str[]=
+// 	{"UNKNOWN", "HCI_CMD", "ACL_DATA", "SCO_DATA", "HCI_EVENT", "HCI_VENDOR", "ERROR_TYPE"};
 
 int rtbt_hci_dev_send(struct hci_dev *hdev, struct sk_buff *skb)
 {
@@ -136,7 +136,7 @@ int rtbt_hci_dev_send(struct hci_dev *hdev, struct sk_buff *skb)
 			
 		case HCI_SCODATA_PKT:
 			printk("-->%s():sco len=%d,time=0x%lx\n", __FUNCTION__, skb->len, jiffies);
-			os_ctrl->sco_tx_seq = bt_cb(skb)->l2cap.txseq;
+			os_ctrl->sco_tx_seq = bt_cb(skb)->control.txseq;
 			os_ctrl->sco_time_hci = jiffies;
 			
 			status = hps_ops->hci_sco_data(os_ctrl->dev_ctrl, skb->data, skb->len);
